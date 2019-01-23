@@ -46,4 +46,6 @@ dependencies {
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
-# 三、功能说明​
+# 三、功能说明
+
+功能说明见[wiki](https://github.com/SmartDynamics-SZYH/IwaaRosSDKSample/wiki)
