@@ -62,7 +62,7 @@ dependencies {
 
 # 联系我们
 
-邮箱：[ruanhouli@szyh-smart.com]()
+邮箱：ruanhouli@szyh-smart.com
 
 # License
  ```
