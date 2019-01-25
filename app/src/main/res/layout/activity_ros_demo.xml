@@ -160,6 +160,12 @@
                     android:layout_height="wrap_content"
                     android:onClick="queryInfraredThreshold"
                     android:text="查询红外避障阈值"/>
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="shutdownRobotSystem"
+                    android:text="关闭机器人系统"/>
             </LinearLayout>
 
             <TextView

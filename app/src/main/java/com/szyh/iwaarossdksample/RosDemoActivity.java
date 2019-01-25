@@ -9,6 +9,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.xhapimanager.XHApiManager;
 import com.leon.lfilepickerlibrary.LFilePicker;
 import com.szyh.iwaarossdksample.util.ToastUtil;
 import com.szyh.iwaarossdksample.util.UiUtil;
@@ -140,6 +141,20 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
 
     public void queryInfraredThreshold(View view) {
         setInfoText(Arrays.toString(RobotRosApi.get().queryInfraredThreshold()));
+    }
+
+    /**
+     * 关闭机器人
+     *
+     * @param view
+     */
+    public void shutdownRobotSystem(View view) {
+        boolean isShutSuccess = RobotRosApi.get().shutdownRobotSystem();
+        if (isShutSuccess) {
+            new XHApiManager().XHShutDown();
+        } else {
+            ToastUtil.showMessage("发送关闭机器人指令失败");
+        }
     }
 
     //以下是舵机版////////////////////////////////////////////////////////////////////////////////////
