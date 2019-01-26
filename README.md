@@ -57,6 +57,7 @@ dependencies {
 # 功能说明
 
 功能说明详情请见   【 [wiki](https://github.com/SmartDynamics-SZYH/IwaaRosSDKSample/wiki/IwaaRosSDK概述和集成说明) 】
+文档说明详情请见   【 [javaDoc](https://szyh-smartdynamics.github.io) 】
 
 
 
