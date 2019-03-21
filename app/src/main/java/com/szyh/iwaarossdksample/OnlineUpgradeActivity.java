@@ -8,24 +8,30 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.szyh.iwaarossdksample.util.ToastUtil;
+import com.szyh.iwaasdk.sdk.navi.define.MessageDefine;
 import com.szyh.iwaasdk.sdk.upgrade.RobotOnlineUpgradeApi;
 import com.szyh.iwaasdk.sdk.upgrade.bean.OnlineDeviceVersion;
+import com.szyh.iwaasdk.sdk.upgrade.bean.ReportAndroidRes;
 import com.szyh.iwaasdk.sdk.upgrade.bean.ReportRobotRes;
 import com.szyh.iwaasdk.sdk.upgrade.bean.RobotUpdateInfo;
 import com.szyh.iwaasdk.sdk.upgrade.bean.RobotUpdatePushInfo;
 import com.szyh.iwaasdk.sdk.upgrade.bean.RobotUpgradeRes;
+import com.szyh.iwaasdk.sdk.upgrade.interfaces.AndroidUpgradePushListener;
 import com.szyh.iwaasdk.sdk.upgrade.interfaces.ConnectUpgradeCallback;
+import com.szyh.iwaasdk.sdk.upgrade.interfaces.McuUpgradePushListener;
 import com.szyh.iwaasdk.sdk.upgrade.interfaces.ReportRobotVersionsInfoListener;
 import com.szyh.iwaasdk.sdk.upgrade.interfaces.RobotUpdateInfoListener;
-import com.szyh.iwaasdk.sdk.upgrade.interfaces.RobotUpgradePushListener;
 import com.szyh.iwaasdk.sdk.upgrade.interfaces.RobotUpgradeStatusListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OnlineUpgradeActivity extends AppCompatActivity implements RobotUpgradePushListener {
+import static com.szyh.iwaasdk.sdk.navi.define.MessageDefine.RequestCmd.ROBOT_UPGRADE_MCU_CMD;
+
+public class OnlineUpgradeActivity extends AppCompatActivity implements McuUpgradePushListener, AndroidUpgradePushListener {
 
     private static final String TAG = "OnlineUpgradeActivity";
+
     private String robotCode;
 
     private RobotUpdateInfo robotUpdateInfo;
@@ -38,14 +44,16 @@ public class OnlineUpgradeActivity extends AppCompatActivity implements RobotUpg
         //华为平板
         Log.i(TAG, "queryAllUpgradeInfo: robotCode = " + robotCode);
 
-        RobotOnlineUpgradeApi.get().registerRobotUpgradePushListener(this);
+        RobotOnlineUpgradeApi.get().registerMcuUpgradePushListener(this);
+        RobotOnlineUpgradeApi.get().registerAndroidUpgradePushListener(this);
     }
 
     public void queryAllUpgradeInfo(View view) {
-        RobotOnlineUpgradeApi.get().queryUpdateDataInfo(robotCode, new RobotUpdateInfoListener() {
+        RobotOnlineUpgradeApi.get().queryUpdateDataInfo(robotCode,0, new RobotUpdateInfoListener() {
             @Override
             public void onRobotUpdateInfoResponse(RobotUpdateInfo robotUpdateInfo) {
                 OnlineUpgradeActivity.this.robotUpdateInfo = robotUpdateInfo;
+                Log.i(TAG, "onRobotUpdateInfoResponse: " + robotUpdateInfo.toString());
                 ToastUtil.showMessage(JSON.toJSONString(robotUpdateInfo));
             }
 
@@ -62,6 +70,8 @@ public class OnlineUpgradeActivity extends AppCompatActivity implements RobotUpg
             public void onConnectUpgradeOpen() {
                 Log.i(TAG, "onConnectUpgradeOpen: ");
                 ToastUtil.showMessage("升级服务器连接成功！");
+                // TODO: 2019/3/7 连接服务器成功之后，必须邀上报本地版本号状态，否则无法接受到推送的数据，MCU固件版本号和安卓系统版本号。
+                reportRobotVersionsInfo();
             }
 
             @Override
@@ -120,13 +130,16 @@ public class OnlineUpgradeActivity extends AppCompatActivity implements RobotUpg
 
     //上报版本号信息
     public void reportRobotVersionsInfo(View view) {
+        reportRobotVersionsInfo();
+    }
 
+    private void reportRobotVersionsInfo() {
         if (!RobotOnlineUpgradeApi.get().isConnectUpgradeService()) {
             ToastUtil.showMessage("升级服务器未连接，请先连接上服务器");
             return;
         }
 
-        RobotOnlineUpgradeApi.get().reportRobotVersionsInfo(robotCode, "", hardwareInfoList,
+        RobotOnlineUpgradeApi.get().reportMcuVersionsInfo(robotCode, "", hardwareInfoList,
                 new ReportRobotVersionsInfoListener() {
                     @Override
                     public void onReportRobotVersionsInfo(ReportRobotRes reportRobotRes) {
@@ -146,25 +159,32 @@ public class OnlineUpgradeActivity extends AppCompatActivity implements RobotUpg
             ToastUtil.showMessage("请先获取升级版本信息");
             return;
         }
-        RobotOnlineUpgradeApi.get().sendUpgradeCmd(Integer.parseInt(robotUpdateInfo.getRows().get(0).getId()),
-                "1.0.1", new RobotUpgradeStatusListener() {
+        RobotUpdateInfo.RowsBean rowsBean = robotUpdateInfo.getRows().get(0);
+        Log.i(TAG, "sendUpgradeCmd: id = " + rowsBean.getId());
+        RobotOnlineUpgradeApi.get().sendUpgradeCmd(MessageDefine.RequestCmd.ROBOT_UPGRADE_MCU_CMD, rowsBean.getId(),
+                rowsBean.getNewversion(), new RobotUpgradeStatusListener() {
                     @Override
                     public void onRobotUpgrade(RobotUpgradeRes upgradeCmdRes) {
+                        Log.i(TAG, "onRobotUpgrade: " + JSON.toJSONString(upgradeCmdRes));
                         if (upgradeCmdRes.getResponseCode() == 1) {
                             //TODO 1、可以升级，接受升级数据
+                            ToastUtil.showMessage("可以升级，接受升级数据");
+                        } else {
+                            Log.e(TAG, "onRobotUpgrade: " + upgradeCmdRes.getMsg());
+                            ToastUtil.showMessage(upgradeCmdRes.getMsg());
                         }
                     }
                 });
     }
 
     @Override
-    public void onRobotUpgradePush(RobotUpdatePushInfo robotUpdatePushInfo) {
+    public void onMcuUpgradePush(RobotUpdatePushInfo robotUpdatePushInfo) {
 
+        Log.i(TAG, "onMcuUpgradePush: " + JSON.toJSONString(robotUpdatePushInfo));
         //TODO 2、发送客户端的升级响应
-        RobotOnlineUpgradeApi.get().sendAnswerToUpgradePush(1, "成功", robotUpdatePushInfo.getId(),
+        RobotOnlineUpgradeApi.get().sendAnswerToUpgradePush(ROBOT_UPGRADE_MCU_CMD, 1, "成功", robotUpdatePushInfo.getId(),
                 robotUpdatePushInfo.getSocketId(), robotUpdatePushInfo.getVersion());
-
-        //TODO 3、处理推送过来的数据，RobotUpdatePushInfo fileStr(base64解析成bin文件/url就直接下载)，校验
+        //TODO 3、处理推送过来的数据，RobotUpdatePushInfo fileStr(base64解析成bin文件)，校验
 
         //TODO 4、调用MCU升级接口，安卓固件的话，调用固件差分升级API。
 
@@ -174,8 +194,17 @@ public class OnlineUpgradeActivity extends AppCompatActivity implements RobotUpg
     protected void onStop() {
         super.onStop();
         if (isFinishing()) {
-            RobotOnlineUpgradeApi.get().unregisterRobotUpgradePushListener(this);
+            RobotOnlineUpgradeApi.get().unregisterMcuUpgradePushListener(this);
+            RobotOnlineUpgradeApi.get().unregisterAndroidUpgradePushListener(this);
             RobotOnlineUpgradeApi.get().disconnectUpgradeService();
         }
+    }
+
+    @Override
+    public void onAndroidUpgradePush(ReportAndroidRes reportAndroidRes) {
+        RobotOnlineUpgradeApi.get().sendAnswerToUpgradePush(ROBOT_UPGRADE_MCU_CMD, 1, "成功", reportAndroidRes.getId(),
+                reportAndroidRes.getSocketId(), reportAndroidRes.getSoftNewVersion());
+        // TODO: 2019/3/7 下载固件；
+        // TODO: 2019/3/7 调用安卓系统升级API升级固件
     }
 }

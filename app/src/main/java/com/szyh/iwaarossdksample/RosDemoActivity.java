@@ -356,4 +356,25 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
             }
         }
     }
+
+    public void queryExpressionScreenVersion(View view) {
+        String version = RobotRosApi.get().queryExpressionScreenVersion();
+        ToastUtil.showMessage("表情屏版本号:" + version);
+        setInfoText("表情屏版本号:" + version);
+    }
+
+    public void queryExpressionPictureIndex(View view) {
+        int index = RobotRosApi.get().queryExpressionPictureIndex();
+        ToastUtil.showMessage("表情屏图片序号:" + index);
+        setInfoText("表情屏图片序号:" + index);
+    }
+
+    int index = 0;
+
+    //0-9 10张表情
+    public void changeExpressionPicture(View view) {
+        ToastUtil.showMessage("切换到第" + (index + 1) + "张表情图片");
+        RobotRosApi.get().changeExpressionPicture(index);
+        index = index == 9 ? 0 : index + 1;
+    }
 }

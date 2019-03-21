@@ -361,6 +361,36 @@
                     android:onClick="updateUltrasonicBoard2Bin"
                     android:text="超声波板(0x07)"/>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="表情屏" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="queryExpressionScreenVersion"
+                    android:text="查询表情屏版本号" />
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="queryExpressionPictureIndex"
+                    android:text="查询表情屏图片ID" />
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="changeExpressionPicture"
+                    android:text="切换表情屏图片ID" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
