@@ -363,18 +363,18 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
         setInfoText("表情屏版本号:" + version);
     }
 
-    public void queryExpressionPictureIndex(View view) {
-        int index = RobotRosApi.get().queryExpressionPictureIndex();
-        ToastUtil.showMessage("表情屏图片序号:" + index);
-        setInfoText("表情屏图片序号:" + index);
+    public void queryExpressionIndex(View view) {
+        int index = RobotRosApi.get().queryExpressionIndex();
+        ToastUtil.showMessage("表情屏序号:" + index);
+        setInfoText("表情屏序号:" + index);
     }
 
     int index = 0;
 
     //0-9 10张表情
-    public void changeExpressionPicture(View view) {
+    public void changeExpression(View view) {
         ToastUtil.showMessage("切换到第" + (index + 1) + "张表情图片");
-        RobotRosApi.get().changeExpressionPicture(index);
+        RobotRosApi.get().changeExpression(index);
         index = index == 9 ? 0 : index + 1;
     }
 }

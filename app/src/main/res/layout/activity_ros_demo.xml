@@ -381,13 +381,13 @@
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:onClick="queryExpressionPictureIndex"
+                    android:onClick="queryExpressionIndex"
                     android:text="查询表情屏图片ID" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:onClick="changeExpressionPicture"
+                    android:onClick="changeExpression"
                     android:text="切换表情屏图片ID" />
 
             </LinearLayout>
