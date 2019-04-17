@@ -300,9 +300,9 @@ public class NaviDemoActivity extends AppCompatActivity implements RobotStatusLi
                     }
                 });
             }
-            minLaserDistance = distances.get(0);//获取最小距离，单位毫米
+            minLaserDistance = distances.get(0);//获取最小距离，单位厘米
             Log.i(TAG, "onSensorStatusResponse: minLaserDistance = " + minLaserDistance);
-            //TODO 判断 minLaserDistance 大小来做具体的业务。比如1、小于1000毫米以内机器人唤醒，2、大于2000毫米之外机器人休眠
+            //TODO 判断 minLaserDistance 大小来做具体的业务。比如1、小于100厘米以内机器人唤醒，2、大于200厘米之外机器人休眠
         }
     }
 
