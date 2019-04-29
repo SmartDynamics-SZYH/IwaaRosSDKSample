@@ -21,7 +21,7 @@
 
 Android开发工具为Android Studio,不建议使用Eclipse集成。
 IwaaRosSDK 适用Android SDK使用版本：4.4及以上。
-IwaaRosSDK是以aar文件打包，名称如IwaaRosSDK-release-1.0.0.aar，集成步骤说明如下：
+IwaaRosSDK是以aar文件打包，名称如IwaaRosSDK-release-1.0.0.aar,JavaWebSocket-release-1.0.aar，集成步骤说明如下：
 
 1. 把aar文件 拷贝到 自己Android工程的app/libs目录下；  
 	.  在app/build.gradle中添加如下	 
@@ -35,6 +35,7 @@ repositories {
 dependencies {
 	//机器人控制需要添加的aar
 	implementation(name: 'IwaaRosSDK-release-1.0.0, ext: 'aar')；
+	implementation(name: 'JavaWebSocket-release-1.0', ext: 'aar')
 	implementation 'com.alibaba:fastjson:1.1.70.android';
 	implementation 'com.squareup.okhttp3:okhttp:3.8.1';
 }
