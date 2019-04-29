@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.alibaba.fastjson.JSON;
 import com.szyh.iwaarossdksample.util.ToastUtil;
 import com.szyh.iwaasdk.sdk.face.RobotFaceApi;
 import com.szyh.iwaasdk.sdk.face.bean.FaceBean;

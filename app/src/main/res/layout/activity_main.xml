@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="center"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <Button
         android:layout_width="200dp"
@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:onClick="startRosActivity"
-        android:text="Ros相关" />
+        android:text="Ros相关"/>
 
     <Button
         android:layout_width="200dp"
@@ -20,7 +20,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:onClick="startFaceActivity"
-        android:text="人脸相关" />
+        android:text="人脸相关"/>
 
     <Button
         android:layout_width="200dp"
@@ -28,7 +28,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:onClick="startMicActivity"
-        android:text="六麦相关" />
+        android:text="六麦相关"/>
 
     <Button
         android:layout_width="200dp"
@@ -36,6 +36,14 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:onClick="startNaviActivity"
-        android:text="导航相关" />
+        android:text="导航相关"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:onClick="onlineUpgradeActivity"
+        android:text="在线升级模块"/>
 
 </LinearLayout>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/id_info_text"
@@ -11,10 +11,9 @@
         android:background="#4370b3"
         android:gravity="center"
         android:text="版本信息显示"
-        android:textColor="#cdda75"/>
+        android:textColor="#cdda75" />
 
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -27,7 +26,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="版本信息"/>
+                android:text="版本信息" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,14 +37,14 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryAllVersion"
-                    android:text="查询所有版本版本号"/>
+                    android:text="查询所有版本版本号" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="主控板"/>
+                android:text="主控板" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,25 +55,25 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryMainBroadVersion"
-                    android:text="主控板固件升级(0x81)"/>
+                    android:text="查询主控板版本号" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryBatteryInfo"
-                    android:text="舵机板固件升级(0x81)"/>
+                    android:text="查询电池信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryMainBroadStatus"
-                    android:text="电源管理板固件升级(0x04)"/>
+                    android:text="查询主控板状态" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryUltrasoundValue"
-                    android:text="超声波板(0x06)"/>
+                    android:text="查询超声波值" />
             </LinearLayout>
 
             <LinearLayout
@@ -86,25 +85,25 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryMotionInfo"
-                    android:text="查询运动信息"/>
+                    android:text="查询运动信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryInfraRedInfo"
-                    android:text="查询红外信息"/>
+                    android:text="查询红外信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryChargeStatus"
-                    android:text="查询充电状态信息"/>
+                    android:text="查询充电状态信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryPowerBroadInfo"
-                    android:text="查询电源管理板信息"/>
+                    android:text="查询电源管理板信息" />
             </LinearLayout>
 
             <LinearLayout
@@ -117,25 +116,25 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryWheelInfo"
-                    android:text="查询控制车轮信息"/>
+                    android:text="查询控制车轮信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryMainBroadEnable"
-                    android:text="查询主控板使能信息"/>
+                    android:text="查询主控板使能信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryUltrasoundScanIndexs"
-                    android:text="查询超声波扫描序号"/>
+                    android:text="查询超声波扫描序号" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryUltrasoundBlindAreaDistances"
-                    android:text="查询超声波盲区大小"/>
+                    android:text="查询超声波盲区大小" />
             </LinearLayout>
 
             <LinearLayout
@@ -147,31 +146,56 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryUWBInfo"
-                    android:text="查询UWB信息"/>
+                    android:text="查询UWB信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryMainBroadRTC"
-                    android:text="查询主控板RTC时间"/>
+                    android:text="查询主控板RTC时间" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryInfraredThreshold"
-                    android:text="查询红外避障阈值"/>
+                    android:text="查询红外避障阈值" />
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="ultrasoundEnables"
+                    android:text="使能第一个超声波" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="shutdownRobotSystem"
-                    android:text="关闭机器人系统"/>
+                    android:text="关闭机器人" />
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="restartRobotSystem"
+                    android:text="重启机器人" />
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="gotoUpdate"
+                    android:text="界面操作升级" />
+
             </LinearLayout>
 
             <TextView
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="舵机板"/>
+                android:text="舵机板" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -182,25 +206,25 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryRudderBroadVersion"
-                    android:text="查询舵机板版本号"/>
+                    android:text="查询舵机板版本号" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryHeadInfo"
-                    android:text="查询头部信息"/>
+                    android:text="查询头部信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryLeftArmInfo"
-                    android:text="查询左臂信息"/>
+                    android:text="查询左臂信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryRightArmInfo"
-                    android:text="查询右臂信息"/>
+                    android:text="查询右臂信息" />
             </LinearLayout>
 
             <LinearLayout
@@ -212,25 +236,25 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="queryRudderStatus"
-                    android:text="查询舵机板状态信息"/>
+                    android:text="查询舵机板状态信息" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="turnHead"
-                    android:text="头部运动(170->10->90)"/>
+                    android:text="头部运动(170->10->90)" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="turnLeftArm"
-                    android:text="左臂运动(270->90->180)"/>
+                    android:text="左臂运动(270->90->180)" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="turnRightArm"
-                    android:text="右臂运动(270->90->180)"/>
+                    android:text="右臂运动(270->90->180)" />
             </LinearLayout>
 
             <LinearLayout
@@ -242,25 +266,25 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="ledSetOnOff"
-                    android:text="呼吸灯开关"/>
+                    android:text="呼吸灯开关" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="setLedRed"
-                    android:text="呼吸灯红色"/>
+                    android:text="呼吸灯红色" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="setLedGreen"
-                    android:text="呼吸灯绿色"/>
+                    android:text="呼吸灯绿色" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="setLedBlue"
-                    android:text="呼吸灯蓝色"/>
+                    android:text="呼吸灯蓝色" />
 
             </LinearLayout>
 
@@ -273,25 +297,25 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="fanSetTempThreshold"
-                    android:text="设置温度阈值60度"/>
+                    android:text="设置温度阈值60度" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="fanGetTempThreshold"
-                    android:text="读取温度阈值"/>
+                    android:text="读取温度阈值" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="getCurrentSensorTemp"
-                    android:text="读取当前温度值"/>
+                    android:text="读取当前温度值" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="syncBothArms1"
-                    android:text="双臂同向运动"/>
+                    android:text="双臂同向运动" />
 
             </LinearLayout>
 
@@ -304,20 +328,20 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="syncBothArms2"
-                    android:text="双臂反向运动"/>
+                    android:text="双臂反向运动" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="syncBothArms3"
-                    android:text="取消双臂运动"/>
+                    android:text="取消双臂运动" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="固件升级"/>
+                android:text="固件升级" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -328,25 +352,25 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="updateMainBroadBin"
-                    android:text="主控板(0x81)"/>
+                    android:text="主控板(0x81)" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="updateRudderBin"
-                    android:text="舵机板(0x82)"/>
+                    android:text="舵机板(0x82)" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="updatePWRBroadBin"
-                    android:text="电源管理板(0x04)"/>
+                    android:text="电源管理板(0x04)" />
 
                 <Button
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="updateUltrasonicBoard1Bin"
-                    android:text="超声波板(0x06)"/>
+                    android:text="超声波板(0x06)" />
 
             </LinearLayout>
 
@@ -359,7 +383,7 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="updateUltrasonicBoard2Bin"
-                    android:text="超声波板(0x07)"/>
+                    android:text="超声波板(0x07)" />
             </LinearLayout>
 
             <TextView

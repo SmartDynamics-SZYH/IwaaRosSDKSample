@@ -35,6 +35,14 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:onClick="sendUpgradeCmd"
+        android:text="发送升级指令"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:onClick="disconnectUpgradeService"
         android:text="断开升级服务"/>
 

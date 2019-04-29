@@ -1,7 +1,10 @@
 package com.szyh.iwaarossdksample;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,14 +18,17 @@ import com.szyh.iwaarossdksample.util.ToastUtil;
 import com.szyh.iwaarossdksample.util.UiUtil;
 import com.szyh.iwaasdk.coreservice.smt.bean.ArmInfo;
 import com.szyh.iwaasdk.coreservice.smt.bean.DeviceVersion;
+import com.szyh.iwaasdk.coreservice.smt.bean.MainBroadEnable;
+import com.szyh.iwaasdk.coreservice.smt.bean.MainBroadStatus;
 import com.szyh.iwaasdk.sdk.ros.RobotRosApi;
 import com.szyh.iwaasdk.sdk.ros.define.RosDefine;
+import com.szyh.iwaasdk.sdk.ros.interfaces.MainBroadStatusListener;
 import com.szyh.iwaasdk.sdk.ros.interfaces.McuUpdateListener;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class RosDemoActivity extends AppCompatActivity implements McuUpdateListener {
+public class RosDemoActivity extends AppCompatActivity implements McuUpdateListener, MainBroadStatusListener {
 
     private static final String TAG = "RosDemoActivity";
 
@@ -31,14 +37,14 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
     static SparseArray<String> sparseArray = new SparseArray<>();
 
     static {
-        sparseArray.append(DeviceVersion.TYPE_MAIN_BROAD, "主控板版本号");
-        sparseArray.append(DeviceVersion.TYPE_UWB, "超宽带版本号");
-        sparseArray.append(DeviceVersion.TYPE_POWER_BOARD, "电源管理板版本号");
-        sparseArray.append(DeviceVersion.TYPE_CHASSIS_LEFT, "底盘左版本号");
-        sparseArray.append(DeviceVersion.TYPE_CHASSIS_RIGHT, "底盘右版本号");
-        sparseArray.append(DeviceVersion.TYPE_ULTRASONIC_FIRST, "超声波1版本号");
-        sparseArray.append(DeviceVersion.TYPE_ULTRASONIC_SECOND, "超声波2版本号");
-        sparseArray.append(DeviceVersion.TYPE_RUDDER_BROAD, "舵机板版本号");
+        sparseArray.append(DeviceVersion.TYPE_MAIN_BROAD, "主控板");
+        sparseArray.append(DeviceVersion.TYPE_UWB, "超宽带");
+        sparseArray.append(DeviceVersion.TYPE_POWER_BOARD, "电源管理板");
+        sparseArray.append(DeviceVersion.TYPE_CHASSIS_LEFT, "底盘左");
+        sparseArray.append(DeviceVersion.TYPE_CHASSIS_RIGHT, "底盘右");
+        sparseArray.append(DeviceVersion.TYPE_ULTRASONIC_FIRST, "超声波1");
+        sparseArray.append(DeviceVersion.TYPE_ULTRASONIC_SECOND, "超声波2");
+        sparseArray.append(DeviceVersion.TYPE_RUDDER_BROAD, "舵机板");
     }
 
     @Override
@@ -46,6 +52,15 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ros_demo);
         infoText = findViewById(R.id.id_info_text);
+        RobotRosApi.get().registerMainBroadStatusListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isFinishing()) {
+            RobotRosApi.get().unregisterMainBroadStatusListener(this);
+        }
     }
 
     private void setInfoText(final String text) {
@@ -141,20 +156,6 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
 
     public void queryInfraredThreshold(View view) {
         setInfoText(Arrays.toString(RobotRosApi.get().queryInfraredThreshold()));
-    }
-
-    /**
-     * 关闭机器人
-     *
-     * @param view
-     */
-    public void shutdownRobotSystem(View view) {
-        boolean isShutSuccess = RobotRosApi.get().shutdownRobotSystem();
-        if (isShutSuccess) {
-            new XHApiManager().XHShutDown();
-        } else {
-            ToastUtil.showMessage("发送关闭机器人指令失败");
-        }
     }
 
     //以下是舵机版////////////////////////////////////////////////////////////////////////////////////
@@ -357,6 +358,22 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
         }
     }
 
+    private int count = 0;
+
+    public void ultrasoundEnables(View view) {
+        MainBroadEnable mainBroadEnable = RobotRosApi.get().queryMainBroadEnable();
+        Log.i(TAG, "ultrasoundEnables: " + mainBroadEnable.toString());
+        boolean[] ultrasoundEnables = mainBroadEnable.getUltrasoundEnables();
+        for (int i = 0; i < ultrasoundEnables.length; i++) {
+            ultrasoundEnables[i] = count % 2 == 0;
+        }
+        count++;
+        mainBroadEnable.setUltrasoundEnables(ultrasoundEnables);
+        mainBroadEnable.setFdkDriverFlag(1);
+        RobotRosApi.get().updateMainBroadEnable(mainBroadEnable);
+    }
+
+
     public void queryExpressionScreenVersion(View view) {
         String version = RobotRosApi.get().queryExpressionScreenVersion();
         ToastUtil.showMessage("表情屏版本号:" + version);
@@ -365,16 +382,82 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
 
     public void queryExpressionIndex(View view) {
         int index = RobotRosApi.get().queryExpressionIndex();
-        ToastUtil.showMessage("表情屏序号:" + index);
-        setInfoText("表情屏序号:" + index);
+        ToastUtil.showMessage("表情屏图片序号:" + index);
+        setInfoText("表情屏图片序号:" + index);
     }
 
-    int index = 0;
+    int index = 1;
 
-    //0-9 10张表情
     public void changeExpression(View view) {
-        ToastUtil.showMessage("切换到第" + (index + 1) + "张表情图片");
+        if (index > 9) {
+            index = 0;
+        }
+        ToastUtil.showMessage("开始播放第" + (index + 1) + "组动画~~");
         RobotRosApi.get().changeExpression(index);
-        index = index == 9 ? 0 : index + 1;
+        index++;
+    }
+
+    public void shutdownRobotSystem(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // 设置参数
+        builder.setTitle("请做出选择").setIcon(R.mipmap.ic_launcher)
+                .setMessage("请问是否需要关闭机器人系统？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        if (RobotRosApi.get().shutdownRobotSystem()) {
+                            ToastUtil.showMessage("关机命令发送成功，30s后关机！");
+                            new XHApiManager().XHShutDown();
+                        } else {
+                            ToastUtil.showMessage("关机命令发送失败！");
+                        }
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog,
+                                int which) {
+            }
+        });
+        builder.create().show();
+    }
+
+    public void restartRobotSystem(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("请做出选择").setIcon(R.mipmap.ic_launcher)
+                .setMessage("请问是否需要重启机器人系统？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        if (RobotRosApi.get().restartRobotSystem()) {
+                            ToastUtil.showMessage("重启命令发送成功，30S后重启！");
+                            new XHApiManager().XHShutDown();
+                        } else {
+                            ToastUtil.showMessage("重启命令发送失败！");
+                        }
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog,
+                                int which) {
+            }
+        });
+        builder.create().show();
+    }
+
+    @Override
+    public void onMainBroadStatusResult(MainBroadStatus mainBroadStatus) {
+
+    }
+
+    public void gotoUpdate(View view) {
+        Intent intent = new Intent(this, MCUUpdateActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

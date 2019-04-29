@@ -49,7 +49,7 @@ public class OnlineUpgradeActivity extends AppCompatActivity implements McuUpgra
     }
 
     public void queryAllUpgradeInfo(View view) {
-        RobotOnlineUpgradeApi.get().queryUpdateDataInfo(robotCode,0, new RobotUpdateInfoListener() {
+        RobotOnlineUpgradeApi.get().queryUpdateDataInfo(robotCode, 0, new RobotUpdateInfoListener() {
             @Override
             public void onRobotUpdateInfoResponse(RobotUpdateInfo robotUpdateInfo) {
                 OnlineUpgradeActivity.this.robotUpdateInfo = robotUpdateInfo;
@@ -65,7 +65,8 @@ public class OnlineUpgradeActivity extends AppCompatActivity implements McuUpgra
     }
 
     public void connectUpgradeService(View view) {
-        RobotOnlineUpgradeApi.get().connectUpgradeService(new ConnectUpgradeCallback() {
+        //ws:// update.szyh-smart.com:10086/WebSocketMessager
+        RobotOnlineUpgradeApi.get().connectUpgradeService("update.szyh-smart.com", "10086", new ConnectUpgradeCallback() {
             @Override
             public void onConnectUpgradeOpen() {
                 Log.i(TAG, "onConnectUpgradeOpen: ");
