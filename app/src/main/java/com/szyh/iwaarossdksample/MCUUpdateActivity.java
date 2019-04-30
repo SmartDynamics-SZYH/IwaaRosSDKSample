@@ -39,7 +39,6 @@ public class MCUUpdateActivity extends AppCompatActivity implements McuUpdateLis
     static {
         sparseArray.append(RosDefine.McuBinType.MAIN_BROAD, "主控板");
         sparseArray.append(RosDefine.McuBinType.PWR_BOARD, "电源管理板");
-        sparseArray.append(RosDefine.McuBinType.BATTERY_BOARD, "电源管理板");
         sparseArray.append(RosDefine.McuBinType.LEFT_WHEEL, "底盘左");
         sparseArray.append(RosDefine.McuBinType.RIGHT_WHEEL, "底盘右");
         sparseArray.append(RosDefine.McuBinType.ULTRASONIC_BOARD1, "超声波1");
