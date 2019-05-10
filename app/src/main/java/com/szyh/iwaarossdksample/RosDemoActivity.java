@@ -460,4 +460,47 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    public void getLowPercent(View view) {
+        setInfoText("读取低电量设置值为：" + RobotRosApi.get().getLowBatteryAlarmPercent() + "%");
+    }
+
+    public void setLow20(View view) {
+        setLowPercent(20);
+    }
+
+    public void setLow30(View view) {
+        setLowPercent(30);
+    }
+
+    public void setLow40(View view) {
+        setLowPercent(40);
+    }
+
+    public void setLow50(View view) {
+        setLowPercent(50);
+    }
+
+    private void setLowPercent(int Percent) {
+        RobotRosApi.get().setLowBatteryAlarmPercent(Percent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // 设置参数
+        builder.setTitle("请做出选择").setIcon(R.mipmap.ic_launcher)
+                .setMessage("请问是否确认要设置低电量为" + Percent + "%?")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        RobotRosApi.get().writeConfigConfirm();
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog,
+                                int which) {
+            }
+        });
+        builder.create().show();
+    }
 }

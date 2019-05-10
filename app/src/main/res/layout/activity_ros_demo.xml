@@ -190,6 +190,44 @@
                     android:onClick="gotoUpdate"
                     android:text="界面操作升级" />
 
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="getLowPercent"
+                    android:text="读取低电量设置值" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="setLow20"
+                    android:text="低电量报警设置20%" />
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="setLow30"
+                    android:text="低电量报警设置30%" />
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="setLow40"
+                    android:text="低电量报警设置40%" />
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="setLow50"
+                    android:text="低电量报警设置50%" />
+
+
             </LinearLayout>
 
             <TextView
