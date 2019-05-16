@@ -282,27 +282,11 @@ public class NaviDemoActivity extends AppCompatActivity implements RobotStatusLi
         SensorStatusResponse.Laser laser = sensorStatusResponse.getLaser();
         List<Integer> ranges = laser.getRanges();//size = 720个激光束,合计240度（3激光束一度）,正前方最右侧为0号索引
         if (ranges != null) {
-            List<Integer> distances = new ArrayList<>();
             int midIndex = ranges.size() / 2;
             int minIndex = midIndex - (45 * 3);
             int maxIndex = midIndex + (45 * 3);
-            for (int i = minIndex; i <= maxIndex; i++) {
-                //正前方90度范围内 最小值
-                int distance = ranges.get(i);
-                distances.add(distance);
-                Collections.sort(distances, new Comparator<Integer>() {
-                    @Override
-                    public int compare(Integer o1, Integer o2) {
-                        if (o1 > o2) {//升序排序
-                            return 1;
-                        } else if (o1 == o2) {
-                            return 0;
-                        } else {
-                            return -1;
-                        }
-                    }
-                });
-            }
+            List<Integer> distances = ranges.subList(minIndex, maxIndex);
+            Collections.sort(distances);//默认升序排序
             minLaserDistance = distances.get(0);//获取最小距离，单位厘米
             Log.i(TAG, "onSensorStatusResponse: minLaserDistance = " + minLaserDistance);
             //TODO 判断 minLaserDistance 大小来做具体的业务。比如1、小于100厘米以内机器人唤醒，2、大于200厘米之外机器人休眠
