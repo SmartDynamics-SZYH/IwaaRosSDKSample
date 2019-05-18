@@ -301,6 +301,21 @@ public class NaviDemoActivity extends AppCompatActivity implements RobotStatusLi
     @Override
     public void onRobotNavigationStatusResponse(NavigationStatusResponse navigationStatusResponse) {
         //Logger.json(JSON.toJSONString(navigationStatusResponse));
+        int naviStatus = navigationStatusResponse.getIsArrive();//导航状态值。可以参考NaviDefine.NaviStatus类。
+        switch (naviStatus) {
+            case NaviDefine.NaviStatus.IDLE:
+            case NaviDefine.NaviStatus.NAVIGATING:
+            case NaviDefine.NaviStatus.ARRIVED:
+            case NaviDefine.NaviStatus.ENCOUNTER_OBSTACLE:
+            case NaviDefine.NaviStatus.ROBOT_IN_OBSTACLE:
+            case NaviDefine.NaviStatus.TARGET_IN_OBSTACLE:
+            case NaviDefine.NaviStatus.UNABLE_PLAN_PATH:
+            case NaviDefine.NaviStatus.NAVIGATE_WAITING:
+            case NaviDefine.NaviStatus.POINT_UNREACHABLE:
+            case NaviDefine.NaviStatus.ROBOT_IN_DANGEROUS_AREA:
+            case NaviDefine.NaviStatus.TARGET_IN_DANGEROUS_AREA:
+            case NaviDefine.NaviStatus.UNKNOWN:
+        }
     }
 
     public void setDefaultMap(View view) {
