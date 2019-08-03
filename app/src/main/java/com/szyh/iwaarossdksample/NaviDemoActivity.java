@@ -260,7 +260,11 @@ public class NaviDemoActivity extends AppCompatActivity implements RobotStatusLi
             ToastUtil.showMessage("请先同步数据，然后根据地图名字获取。！");
             return;
         }
-        RobotNaviApi.get().replaceMap(mapName, base64MapData, new DefaultCallback() {
+        MapPoint mapPoint = new MapPoint();
+        mapPoint.setX(100);
+        mapPoint.setY(100);
+        mapPoint.setAngle(10);
+        RobotNaviApi.get().replaceMap(mapName, base64MapData, mapPoint, new DefaultCallback() {
             @Override
             public void onSuccess() {
                 ToastUtil.showMessage("替换地图成功");

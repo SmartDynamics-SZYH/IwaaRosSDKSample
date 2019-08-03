@@ -24,6 +24,7 @@
         <activity android:name=".NaviDemoActivity" />
         <activity android:name=".OnlineUpgradeActivity" />
         <activity android:name=".MCUUpdateActivity" />
+        <activity android:name=".AndroidDemoActivity" />
     </application>
 
 </manifest>
