@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.szyh.iwaarossdksample.util.UiUtil;
+import com.szyh.iwaasdk.sdk.android.RobotAndroidApi;
 import com.szyh.iwaasdk.sdk.mic.RobotMicApi;
 import com.szyh.iwaasdk.sdk.ros.RobotRosApi;
 import com.szyh.iwaasdk.sdk.ros.interfaces.InitListener;
@@ -62,6 +63,8 @@ public class App extends Application {
             }
         });
 
+        //RK3399必须要初始化，RK3288可以不需要。
+        RobotAndroidApi.get().init(this);
     }
 
     @Override

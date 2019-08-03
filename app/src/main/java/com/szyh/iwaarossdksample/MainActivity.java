@@ -89,4 +89,8 @@ public class MainActivity extends AppCompatActivity {
             }, 1000);
         }
     }
+
+    public void androidActivity(View view) {
+        gotoActivity(AndroidDemoActivity.class);
+    }
 }

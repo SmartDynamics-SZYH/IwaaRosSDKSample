@@ -11,47 +11,47 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:onClick="startRosActivity"
-        android:text="Ros相关" />
+        android:onClick="androidShutdown"
+        android:text="安卓系统关机" />
 
     <Button
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:onClick="startFaceActivity"
-        android:text="人脸相关" />
+        android:onClick="androidReboot"
+        android:text="安卓系统重启" />
 
     <Button
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:onClick="startMicActivity"
-        android:text="六麦相关" />
+        android:onClick="installOnBackground"
+        android:text="静默安装APK" />
 
     <Button
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:onClick="startNaviActivity"
-        android:text="导航相关" />
+        android:onClick="uninstallOnBackground"
+        android:text="静默卸载App" />
 
     <Button
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:onClick="onlineUpgradeActivity"
-        android:text="在线升级模块" />
+        android:onClick="showStatusBar"
+        android:text="显示导航栏" />
 
     <Button
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:onClick="androidActivity"
-        android:text="安卓系统模块" />
+        android:onClick="hideStatusBar"
+        android:text="隐藏导航栏" />
 
 </LinearLayout>
