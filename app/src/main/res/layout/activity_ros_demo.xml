@@ -374,6 +374,12 @@
                     android:onClick="syncBothArms3"
                     android:text="取消双臂运动" />
 
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="updateLeftArmPara"
+                    android:text="查询左臂参数" />
+
             </LinearLayout>
 
             <TextView

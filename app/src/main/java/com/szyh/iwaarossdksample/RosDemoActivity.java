@@ -503,4 +503,24 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
         });
         builder.create().show();
     }
+
+    public void updateLeftArmPara(View view) {
+        //[70, 15, 5]
+        if (RobotRosApi.get().updateArmPara(ArmInfo.LEFT, new int[]{70, 15, 5})) {
+            Log.i(TAG, "updateLeftArmPara:updateArmPara success ");
+            RobotRosApi.get().saveParaToRudderBroad();
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                int[] armPara = RobotRosApi.get().queryArmPara(ArmInfo.LEFT);
+                Log.i(TAG, "updateLeftArmPara: " + Arrays.toString(armPara));
+            }
+        }).start();
+    }
 }
