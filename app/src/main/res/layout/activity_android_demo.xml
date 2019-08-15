@@ -54,4 +54,12 @@
         android:onClick="hideStatusBar"
         android:text="隐藏导航栏" />
 
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:onClick="localSystemUpdating"
+        android:text="安卓本地升级" />
+
 </LinearLayout>

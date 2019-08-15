@@ -47,4 +47,8 @@ public class AndroidDemoActivity extends AppCompatActivity {
     public void hideStatusBar(View view) {
         RobotAndroidApi.get().hideStatusBar();
     }
+
+    public void localSystemUpdating(View view) {
+        RobotAndroidApi.get().localSystemUpdating();
+    }
 }
