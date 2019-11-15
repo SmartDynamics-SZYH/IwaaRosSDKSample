@@ -28,7 +28,7 @@ dependencies {
     implementation "com.android.support:support-v4:$rootProject.v4Version"
     implementation "com.android.support:design:$rootProject.v4Version"
     implementation "com.android.support:appcompat-v7:$rootProject.v4Version"
-    implementation(name: 'IwaaRosSDK-release-1.0.3', ext: 'aar')
+    implementation(name: 'IwaaRosSDK-release-1.0.4', ext: 'aar')
     implementation(name: 'JavaWebSocket-release-1.0', ext: 'aar')
     implementation 'com.alibaba:fastjson:1.1.70.android'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'

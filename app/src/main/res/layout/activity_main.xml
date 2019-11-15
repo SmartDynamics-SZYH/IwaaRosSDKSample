@@ -54,4 +54,12 @@
         android:onClick="androidActivity"
         android:text="安卓系统模块" />
 
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:onClick="PeripheralActivity"
+        android:text="社保卡和身份证阅读器" />
+
 </LinearLayout>

@@ -93,4 +93,8 @@ public class MainActivity extends AppCompatActivity {
     public void androidActivity(View view) {
         gotoActivity(AndroidDemoActivity.class);
     }
+
+    public void PeripheralActivity(View view) {
+        gotoActivity(PeripheralActivity.class);
+    }
 }
