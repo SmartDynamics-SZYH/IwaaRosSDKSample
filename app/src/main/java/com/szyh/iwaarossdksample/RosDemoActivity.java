@@ -3,7 +3,6 @@ package com.szyh.iwaarossdksample;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -12,20 +11,22 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.xhapimanager.XHApiManager;
 import com.leon.lfilepickerlibrary.LFilePicker;
 import com.szyh.iwaarossdksample.util.ToastUtil;
 import com.szyh.iwaarossdksample.util.UiUtil;
 import com.szyh.iwaasdk.coreservice.smt.bean.ArmInfo;
 import com.szyh.iwaasdk.coreservice.smt.bean.DeviceVersion;
 import com.szyh.iwaasdk.coreservice.smt.bean.MainBroadEnable;
+import com.szyh.iwaasdk.coreservice.smt.bean.MainBroadRTC;
 import com.szyh.iwaasdk.coreservice.smt.bean.MainBroadStatus;
+import com.szyh.iwaasdk.sdk.android.RobotAndroidApi;
 import com.szyh.iwaasdk.sdk.ros.RobotRosApi;
 import com.szyh.iwaasdk.sdk.ros.define.RosDefine;
 import com.szyh.iwaasdk.sdk.ros.interfaces.MainBroadStatusListener;
 import com.szyh.iwaasdk.sdk.ros.interfaces.McuUpdateListener;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class RosDemoActivity extends AppCompatActivity implements McuUpdateListener, MainBroadStatusListener {
@@ -409,7 +410,7 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
                                         int which) {
                         if (RobotRosApi.get().shutdownRobotSystem()) {
                             ToastUtil.showMessage("关机命令发送成功，30s后关机！");
-                            new XHApiManager().XHShutDown();
+                            RobotAndroidApi.get().androidShutdown();
                         } else {
                             ToastUtil.showMessage("关机命令发送失败！");
                         }
@@ -435,7 +436,7 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
                                         int which) {
                         if (RobotRosApi.get().restartRobotSystem()) {
                             ToastUtil.showMessage("重启命令发送成功，30S后重启！");
-                            new XHApiManager().XHShutDown();
+                            RobotAndroidApi.get().androidShutdown();
                         } else {
                             ToastUtil.showMessage("重启命令发送失败！");
                         }
@@ -522,5 +523,27 @@ public class RosDemoActivity extends AppCompatActivity implements McuUpdateListe
                 Log.i(TAG, "updateLeftArmPara: " + Arrays.toString(armPara));
             }
         }).start();
+    }
+
+
+    //开始定时开机方法
+    public void startBootTime() {
+        MainBroadRTC mainBroadRTC = RobotRosApi.get().queryMainBroadRTC();
+
+        //同步安卓时间给主控板。每次开机必须要同步下，否则时间误差，定时开机时间不准。
+        Calendar calendar = Calendar.getInstance();
+        mainBroadRTC.setHour(calendar.get(Calendar.HOUR));
+        mainBroadRTC.setMinute(calendar.get(Calendar.MINUTE));
+        mainBroadRTC.setSecond(calendar.get(Calendar.SECOND));
+        mainBroadRTC.setSync(true);
+
+
+        //开始定时开机，时间是24小时制
+        mainBroadRTC.setResumeAlarmHour(7);//上午7点
+        mainBroadRTC.setResumeAlarmMin(30);//30分
+        mainBroadRTC.setResumeFlag(true);//true 表示开启，false表示关闭
+
+
+        RobotRosApi.get().updateMainBroadRTC(mainBroadRTC);
     }
 }
