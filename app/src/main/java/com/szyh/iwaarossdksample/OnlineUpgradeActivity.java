@@ -195,9 +195,13 @@ public class OnlineUpgradeActivity extends AppCompatActivity implements McuUpgra
     protected void onStop() {
         super.onStop();
         if (isFinishing()) {
-            RobotOnlineUpgradeApi.get().unregisterMcuUpgradePushListener(this);
-            RobotOnlineUpgradeApi.get().unregisterAndroidUpgradePushListener(this);
-            RobotOnlineUpgradeApi.get().disconnectUpgradeService();
+            try {
+                RobotOnlineUpgradeApi.get().unregisterMcuUpgradePushListener(this);
+                RobotOnlineUpgradeApi.get().unregisterAndroidUpgradePushListener(this);
+                RobotOnlineUpgradeApi.get().disconnectUpgradeService();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

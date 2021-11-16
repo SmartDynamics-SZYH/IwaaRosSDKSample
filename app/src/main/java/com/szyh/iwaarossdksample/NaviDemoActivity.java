@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.alibaba.fastjson.JSON;
 import com.szyh.iwaarossdksample.util.ToastUtil;
 import com.szyh.iwaarossdksample.util.UiUtil;
 import com.szyh.iwaasdk.sdk.navi.RobotNaviApi;
@@ -16,14 +15,12 @@ import com.szyh.iwaasdk.sdk.navi.interfaces.AllMapPlanCallback;
 import com.szyh.iwaasdk.sdk.navi.interfaces.ConnectNaviCallback;
 import com.szyh.iwaasdk.sdk.navi.interfaces.CreateMapCallback;
 import com.szyh.iwaasdk.sdk.navi.interfaces.DefaultCallback;
-import com.szyh.iwaasdk.sdk.navi.interfaces.HeartbeatCallback;
 import com.szyh.iwaasdk.sdk.navi.interfaces.MapInfoCallback;
 import com.szyh.iwaasdk.sdk.navi.interfaces.RobotStatusListener;
 import com.szyh.iwaasdk.sdk.navi.interfaces.UploadMappingListener;
 import com.szyh.iwaasdk.sdk.navi.websocket.bean.AllMapPlanResponse;
 import com.szyh.iwaasdk.sdk.navi.websocket.bean.ElectricFenceLineBean;
 import com.szyh.iwaasdk.sdk.navi.websocket.bean.ElectricFenceRectBean;
-import com.szyh.iwaasdk.sdk.navi.websocket.bean.HeartbeatResponse;
 import com.szyh.iwaasdk.sdk.navi.websocket.bean.MapBean;
 import com.szyh.iwaasdk.sdk.navi.websocket.bean.MapByNameResponse;
 import com.szyh.iwaasdk.sdk.navi.websocket.bean.MapPoint;
@@ -33,9 +30,7 @@ import com.szyh.iwaasdk.sdk.navi.websocket.bean.SensorStatusResponse;
 import com.szyh.iwaasdk.sdk.navi.websocket.bean.UploadMappingResponse;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -125,6 +120,7 @@ public class NaviDemoActivity extends AppCompatActivity implements RobotStatusLi
 
             @Override
             public void onSyncAllMapPlanFail(int errorCode) {
+                Log.e(TAG, "onSyncAllMapPlanSuccess: errorCode = " + errorCode);
                 ToastUtil.showMessage("获取图片失败：" + errorCode);
             }
         });
@@ -134,12 +130,13 @@ public class NaviDemoActivity extends AppCompatActivity implements RobotStatusLi
         RobotNaviApi.get().getMapInfoByName(base64MapName, new MapInfoCallback() {
             @Override
             public void onMapInfoSuccess(MapByNameResponse mapByNameResponse) {
+                Log.i(TAG, "getMapInfoByName: mapByNameResponse = " + mapByNameResponse.getMapData());
                 base64MapData = mapByNameResponse.getMapData();
             }
 
             @Override
             public void onMapInfoFail(int errorCode) {
-
+                Log.e(TAG, "getMapInfoByName: errorCode = " + errorCode);
             }
         });
     }
@@ -292,7 +289,7 @@ public class NaviDemoActivity extends AppCompatActivity implements RobotStatusLi
             List<Integer> distances = ranges.subList(minIndex, maxIndex);
             Collections.sort(distances);//默认升序排序
             minLaserDistance = distances.get(0);//获取最小距离，单位厘米
-            Log.i(TAG, "onSensorStatusResponse: minLaserDistance = " + minLaserDistance);
+            Log.v(TAG, "onSensorStatusResponse: minLaserDistance = " + minLaserDistance);
             //TODO 判断 minLaserDistance 大小来做具体的业务。比如1、小于100厘米以内机器人唤醒，2、大于200厘米之外机器人休眠
         }
     }
